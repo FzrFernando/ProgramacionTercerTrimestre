@@ -27,5 +27,4 @@ public class PuebloException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 }
