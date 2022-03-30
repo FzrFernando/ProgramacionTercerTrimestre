@@ -41,7 +41,7 @@ public class Provincia {
 			throw new ProvinciaException("El pueblo no puede ser nulo");
 		}
 		for (Pueblo p : this.pueblos) {
-			if (p.getNombre().equalsIgnoreCase(pueblo)) {
+			if (resultado == false && p.getNombre().equalsIgnoreCase(pueblo)) {
 				resultado = true;
 			}
 		}
@@ -69,19 +69,19 @@ public class Provincia {
 	}
 
 	public String listadoNombresPueblos() {
-		String cadenafinal = "";
+		StringBuilder cadenafinal = new StringBuilder();
 		for (Pueblo p : this.pueblos) {
-			cadenafinal = p.getNombre() + "\n";
+			cadenafinal.append(p.getNombre()  + "\n") ;
 		}
-		return cadenafinal;
+		return cadenafinal.toString();
 	}
 
 	public String listadoPueblos() {
-		String cadenafinal = "";
+		StringBuilder cadenafinal = new StringBuilder();
 		for (Pueblo p : this.pueblos) {
-			cadenafinal = p.toString() + "\n";
+			cadenafinal.append(p.toString() + "\n");
 		}
-		return cadenafinal;
+		return cadenafinal.toString();
 	}
 
 	public boolean delPueblo(String nombre) {
@@ -90,11 +90,12 @@ public class Provincia {
 		while (siguiente.hasNext()) {
 			Pueblo p = siguiente.next();
 			if (p.getNombre().equalsIgnoreCase(nombre)) {
-				this.pueblos.remove(siguiente.next());
-				eliminado = true;
 				this.numeroHabitantes -= p.getNumeroHabitantes();
 				this.rentaPerCapita -= p.getRentaPerCapita();
 				this.superficie -= p.getSuperficie();
+				this.pueblos.remove(p);
+				eliminado = true;
+				
 			}
 		}
 		return eliminado;
