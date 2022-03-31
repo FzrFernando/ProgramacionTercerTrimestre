@@ -184,7 +184,7 @@ public class Provincia {
 	
 	public String getInformacionPueblo(String pueblo) throws ProvinciaException {
 		String cadenafinal = null;
-		if (!existePueblo(pueblo) || pueblo.equals(null)) {
+		if (pueblo == null || !existePueblo(pueblo)) {
 			cadenafinal = null;
 		}
 		else {

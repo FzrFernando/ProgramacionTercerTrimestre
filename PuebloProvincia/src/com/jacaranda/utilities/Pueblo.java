@@ -38,7 +38,7 @@ public class Pueblo implements Comparable<Pueblo>{
 
 	public void setNumeroHabitantes(int numeroHabitantes) throws PuebloException {
 		if (numeroHabitantes < 0) {
-			throw new PuebloException("Tiene que introducir un valor positivo");
+			throw new PuebloException("Tiene que introducir un número de habitantes con valor positivo");
 		}
 		this.numeroHabitantes = numeroHabitantes;
 	}
@@ -49,7 +49,7 @@ public class Pueblo implements Comparable<Pueblo>{
 
 	public void setRentaPerCapita(double rentaPerCapita) throws PuebloException {
 		if (rentaPerCapita < 0) {
-			throw new PuebloException("Tiene que introducir un valor positivo");
+			throw new PuebloException("Tiene que introducir una rentaPerCapita con valor positivo");
 		}
 		this.rentaPerCapita = rentaPerCapita;
 	}
@@ -60,7 +60,7 @@ public class Pueblo implements Comparable<Pueblo>{
 
 	public void setSuperficie(double superficie) throws PuebloException {
 		if (superficie < 0) {
-			throw new PuebloException("Tiene que introducir un valor positivo");
+			throw new PuebloException("Tiene que introducir una superficie con valor positivo");
 		}
 		this.superficie = superficie;
 	}
