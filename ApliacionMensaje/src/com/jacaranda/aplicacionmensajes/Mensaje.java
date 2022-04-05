@@ -3,7 +3,7 @@ package com.jacaranda.aplicacionmensajes;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Mensaje {
+public class Mensaje implements Comparable<Mensaje> {
 
 	private String remitente;
 	private String destinatario;
@@ -12,7 +12,7 @@ public class Mensaje {
 	private int codigo;
 	private static int codigoSiguiente = 1;
 	
-	public Mensaje(String remitente, String destinatario, String texto) {
+	public Mensaje(String remitente, String destinatario, String texto)  throws MensajeException{
 		super();
 		this.codigo = Mensaje.codigoSiguiente++;
 		this.fechayhora = LocalDateTime.now();
@@ -41,9 +41,25 @@ public class Mensaje {
 	public String getRemitente() {
 		return remitente;
 	}
+	
+	public void setRemitente(String remitente) throws MensajeException {
+		if (remitente == null) {
+			throw new MensajeException("El remitente no puede ser nulo");
+		} else {
+			this.remitente = remitente;
+		}
+	}
 
 	public String getTexto() {
 		return texto;
+	}
+	
+	public void setTexto(String texto) throws MensajeException {
+		if (texto == null) {
+			throw new MensajeException("El texto no puede ser nulo");
+		}else {
+			this.texto = texto;
+		}
 	}
 
 	public LocalDateTime getFechayhora() {
@@ -58,6 +74,17 @@ public class Mensaje {
 	public String toString() {
 		return "Mensaje [remitente=" + remitente + ", texto=" + texto + ", fechayhora=" + fechayhora + ", codigo="
 				+ codigo + "]";
+	}
+	
+	@Override
+	public int compareTo(Mensaje o) {
+		int resultado=0;
+		if (o==null) {
+			resultado=-1;
+		}else {
+			resultado=this.remitente.compareToIgnoreCase(o.getRemitente());
+		}
+		return resultado;
 	}
 	
 	
