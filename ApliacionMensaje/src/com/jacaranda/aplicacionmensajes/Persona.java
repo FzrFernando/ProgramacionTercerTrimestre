@@ -34,7 +34,7 @@ public abstract class Persona {
 		return nombre;
 	}
 	
-	public boolean sendMessage(Persona p, String texto) throws MensajeException {
+	public boolean sendMessage(Persona p, String texto) throws MensajeException, ProfesorException {
 		boolean resultado = true;
 		//Creo el mensaje
 		Mensaje aux = new Mensaje(this.nombre,p.nombre,texto);
