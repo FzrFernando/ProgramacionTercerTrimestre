@@ -24,12 +24,24 @@ public class PalabrasEmpiezan {
 		return "PalabrasEmpiezan [letra=" + letra + ", palabra=" + palabra + "]";
 	}
 	
-	public void addPalabra(String palabra, String significado) throws PalabrasEmpiezanException {
+	public void addPalabra(String palabra, String significado) throws PalabrasEmpiezanException, PalabraException {
 		if(palabra == null || significado == null) {
 			throw new PalabrasEmpiezanException("No puede ser nulo");
 		}
 		else {
-			
+			Iterator<Palabra> siguiente = this.palabra.iterator();
+			boolean encontrado = false;
+			while(siguiente.hasNext() && !encontrado) {
+				Palabra p1 = siguiente.next();
+				if (p1.getPalabra().equalsIgnoreCase(palabra)) {
+					p1.addSignificado(significado);
+				}
+				else {
+					int posicion = buscarSuSitio(palabra);
+					Palabra aux = new Palabra(palabra, significado);
+					this.palabra.add(aux);
+				}
+			}
 		}
 	}
 	
