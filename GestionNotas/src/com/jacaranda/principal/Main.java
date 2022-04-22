@@ -27,8 +27,8 @@ public class Main {
 
 		int opc;
 		leerFichero("ficheros//alumnado.txt");
-		leerFichero("ficheros//modulos.txt");
-		leerFichero("ficheros//notas.txt");
+		leerFicheroModulo("ficheros//modulos.txt");
+		leerFicheroNota("ficheros//notas.txt");
 
 		do {
 			muestraMenu();
@@ -92,8 +92,10 @@ public class Main {
 				break;
 			}
 			case 6: {
-				// Escribir los datos que hay en memoeria en el fichero correspondiente
+				// Escribir los datos que hay en memoria en el fichero correspondiente
 				escribirEnFichero("ficheros//alumnado.txt");
+				escribirEnFicheroModulo("ficheros//modulos.txt");
+				escribirEnFicheroNotas("ficheros//notas.txt");
 				break;
 			}
 			default:
@@ -152,6 +154,98 @@ public class Main {
 			//Fin del proceso
 			filtroEscritura.close();
 			flujoEscritura.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void escribirEnFicheroModulo(String nombre) {
+		String cadena;
+		try {
+			FileWriter flujoEscritura = new FileWriter(nombre);
+			PrintWriter filtroEscritura = new PrintWriter(flujoEscritura);
+			//Proceso el fichero
+			
+			for (Modulo mod : listaModulos) {
+			
+				filtroEscritura.println(mod.escribeFichero());
+			}
+			
+			//Fin del proceso
+			filtroEscritura.close();
+			flujoEscritura.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void leerFicheroModulo(String nombreFichero) {
+		String linea;
+		try {
+			FileReader flujoLectura = new FileReader(nombreFichero);
+			BufferedReader filtroLectura = new BufferedReader(flujoLectura);
+			linea = filtroLectura.readLine();
+			while (linea != null) {
+				// System.out.println(linea);
+				// Proceso la linea que acabo de leer
+
+				String[] campos = linea.split(",");
+				Modulo mod = new Modulo(campos[0], Integer.parseInt(campos[1]), Integer.parseInt(campos[2]));
+				listaModulos.add(mod);
+
+				// Leo otra linea
+				linea = filtroLectura.readLine();
+			}
+			filtroLectura.close();
+			flujoLectura.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("No existe el fichero " + nombreFichero);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void escribirEnFicheroNotas(String nombre) {
+		String cadena;
+		try {
+			FileWriter flujoEscritura = new FileWriter(nombre);
+			PrintWriter filtroEscritura = new PrintWriter(flujoEscritura);
+			//Proceso el fichero
+			
+			for (Nota not : listaNota) {
+			
+				filtroEscritura.println(not.escribeFichero());
+			}
+			
+			//Fin del proceso
+			filtroEscritura.close();
+			flujoEscritura.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private static void leerFicheroNota(String nombreFichero) {
+		String linea;
+		try {
+			FileReader flujoLectura = new FileReader(nombreFichero);
+			BufferedReader filtroLectura = new BufferedReader(flujoLectura);
+			linea = filtroLectura.readLine();
+			while (linea != null) {
+				// System.out.println(linea);
+				// Proceso la linea que acabo de leer
+
+				String[] campos = linea.split(",");
+				Nota not = new Nota(Double.parseDouble(campos[0]), LocalTime.parse(campos[1]), campos[2], campos[3]);
+				listaNota.add(not);
+
+				// Leo otra linea
+				linea = filtroLectura.readLine();
+			}
+			filtroLectura.close();
+			flujoLectura.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("No existe el fichero " + nombreFichero);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

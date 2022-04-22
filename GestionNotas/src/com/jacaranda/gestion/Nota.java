@@ -66,6 +66,6 @@ public class Nota {
 	}
 	
 	public String escribeFichero() {
-		return this.nota + "," + this.fecha + "," + this.alumno + "," + this.modulo;
+		return this.nota + "," + this.fecha + "," + this.alumno.getDni() + "," + this.modulo.getNombre();
 	}
 }
