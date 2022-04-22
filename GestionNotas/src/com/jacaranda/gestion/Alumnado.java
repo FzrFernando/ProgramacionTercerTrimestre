@@ -63,5 +63,7 @@ public class Alumnado {
 		return Objects.equals(dni, other.dni);
 	}
 	
-	
+	public String escribeFichero() {
+		return this.nombre + "," + this.dni + "," + this.correoE;
+	}
 }

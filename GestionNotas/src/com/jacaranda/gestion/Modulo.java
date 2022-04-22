@@ -75,5 +75,7 @@ public class Modulo {
 				+ ", creditos=" + creditos + "]";
 	}
 	
-	
+	public String escribeFichero() {
+		return this.nombre + "," + this.numHorasSemanales + "," + this.creditos;
+	}
 }

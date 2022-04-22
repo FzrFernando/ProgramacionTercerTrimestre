@@ -65,5 +65,7 @@ public class Nota {
 				&& Objects.equals(modulo, other.modulo);
 	}
 	
-	
+	public String escribeFichero() {
+		return this.nota + "," + this.fecha + "," + this.alumno + "," + this.modulo;
+	}
 }
