@@ -51,6 +51,16 @@ public class Diccionario {
 		return resultado;
 	}
 	
+	public String buscarPalabra(String principio) {
+		StringBuilder resultado = new StringBuilder();
+		for(String clave : palabras.keySet()) {
+			if (clave.toUpperCase().startsWith(principio)) {
+				resultado.append(clave + "\n");
+			}
+		}
+		return resultado.toString();
+	}
+	
 	@Override
 	public String toString() {
 		return "Diccionario [palabras=" + palabras + "]";
