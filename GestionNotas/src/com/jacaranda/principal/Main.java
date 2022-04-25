@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -236,7 +237,26 @@ public class Main {
 				// Proceso la linea que acabo de leer
 
 				String[] campos = linea.split(",");
-				Nota not = new Nota(Double.parseDouble(campos[0]), LocalTime.parse(campos[1]), campos[2], campos[3]);
+				
+				String dni = campos[2]; //Consigo el dni del alumno
+				Alumnado alu = new Alumnado(dni,"kk"); //Creo un alumno auxiliar
+				int posicion = listaAlumnados.indexOf(alu); //Consigo la pos alumno
+				alu = listaAlumnados.get(posicion); //Buscar un objeto alumno
+				
+				String mod = campos[3]; //Saco el nombre del modulo
+				boolean encontrado = false; //Creo el modulo que devolveré
+				Modulo resultado = null;
+				Iterator<Modulo> siguiente = listaModulos.iterator();
+				while (siguiente.hasNext() && !encontrado) { //Busco el modulo
+					Modulo m1 = siguiente.next();
+					if (m1.getNombre().equals(mod)) {
+						encontrado = true;
+						resultado = m1; //Fuardo el modulo en el auxiliar
+						
+					}
+				}
+				
+				Nota not = new Nota(Double.parseDouble(campos[0]), LocalTime.parse(campos[1]), alu, resultado);
 				listaNota.add(not);
 
 				// Leo otra linea
