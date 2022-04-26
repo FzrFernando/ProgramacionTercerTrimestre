@@ -2,64 +2,88 @@ package com.jacaranda.diccionario;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Objects;
 
 public class PalabrasEmpiezan {
-	
-	private char letra;
-	private List<Palabra> palabra;
-	
-	public PalabrasEmpiezan(char letra) {
+
+	private Character letra;
+	private LinkedList<Palabra> palabras;
+
+	public PalabrasEmpiezan(Character letra) {
 		super();
-		this.letra = letra;
-		this.palabra = new LinkedList<>();
+		this.letra = Character.toUpperCase(letra);
+		palabras = new LinkedList<>();
 	}
 
-	public char getLetra() {
+	public Character getLetra() {
 		return letra;
+	}
+
+	public boolean addPalabra(String palabra, String significado) throws PalabraException {
+		boolean resul = false;
+		int pos = buscaPosicion(palabra);
+		if (pos == -1) {
+			int nuevoSitio = buscaNuevoSitio(palabra);
+			Palabra aux = new Palabra(palabra, significado);
+			this.palabras.add(nuevoSitio, aux);
+			resul = true;
+		} else {
+			this.palabras.get(pos).addSignificado(significado);
+			resul = true;
+		}
+		return resul;
+	}
+
+	private int buscaPosicion(String palabra) {
+		Palabra aux = new Palabra(palabra);
+		return this.palabras.indexOf(aux);
+	}
+
+	private int buscaNuevoSitio(String palabra) {
+		int posicion = 0;
+		boolean encontrado = false;
+		Iterator<Palabra> siguiente = palabras.iterator();
+		while (siguiente.hasNext() && !encontrado) {
+			Palabra p1 = siguiente.next();
+			if (p1.getPalabra().compareTo(palabra) < 0) {
+				encontrado = true;
+			} else {
+				posicion++;
+			}
+		}
+		return posicion;
+	}
+
+	public void delPalabra(String palabra) throws PalabraException {
+		int pos=buscaPosicion(palabra);
+		if(pos==-1) {
+			throw new PalabraException("La palabra no existe");
+		}
+		palabras.remove(pos);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(letra);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PalabrasEmpiezan other = (PalabrasEmpiezan) obj;
+		return Objects.equals(letra, other.letra);
 	}
 
 	@Override
 	public String toString() {
-		return "PalabrasEmpiezan [letra=" + letra + ", palabra=" + palabra + "]";
+		return "PalabraEmpiezan [letra=" + letra + ", palabras=" + palabras + "]";
 	}
 	
-	public void addPalabra(String palabra, String significado) throws PalabrasEmpiezanException, PalabraException {
-		if(palabra == null || significado == null) {
-			throw new PalabrasEmpiezanException("No puede ser nulo");
-		}
-		else {
-			Iterator<Palabra> siguiente = this.palabra.iterator();
-			boolean encontrado = false;
-			while(siguiente.hasNext() && !encontrado) {
-				Palabra p1 = siguiente.next();
-				if (p1.getPalabra().equalsIgnoreCase(palabra)) {
-					p1.addSignificado(significado);
-				}
-				else {
-					int posicion = buscarSuSitio(palabra);
-					Palabra aux = new Palabra(palabra, significado);
-					this.palabra.add(aux);
-				}
-			}
-		}
-	}
 	
-	private int buscarSuSitio(String nuevo) {
-		boolean encontradoPosicion = false;
-		int pos = 0;
-		Iterator<Palabra> it = palabra.iterator();
-		Palabra elemento;
-		
-		while (it.hasNext() && !encontradoPosicion) {
-			elemento = it.next();
-			if (nuevo.compareTo(elemento.getPalabra()) < 0) {
-				encontradoPosicion = true;
-			}
-			else {
-				pos++;
-			}
-		}
-		return pos;
-	}
+	
 }

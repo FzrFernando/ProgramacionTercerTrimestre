@@ -2,12 +2,16 @@ package com.jacaranda.diccionario;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Diccionario d1 = new Diccionario();
-		d1.anadirPalabra("Hola", "significado 1");
-		d1.anadirPalabra("Adios", "significado 4");
 		System.out.println(d1);
-		d1.anadirPalabra("Hola", "significado 4");
-		System.out.println(d1);
+		try {
+			d1.annadirPalabra("Ratilla","Javier");
+			System.out.println(d1);
+			d1.borrarPalabra("Ratilla");
+			System.out.println(d1);
+		} catch (DiccionarioException | PalabrasEmpiezanException | PalabraException e) {
+			e.printStackTrace();
+		}
 	}
 }
