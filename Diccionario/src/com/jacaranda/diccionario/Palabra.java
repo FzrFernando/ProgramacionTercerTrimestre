@@ -28,7 +28,7 @@ public class Palabra {
 	}
 	
 	public Character getInicialPalabra() {
-		return palabra.charAt(0);
+		return this.getPalabra().charAt(0);
 	}
 
 	public void addSignificado(String significado) throws PalabraException {
@@ -36,14 +36,9 @@ public class Palabra {
 			throw new PalabraException("No puede ser nulo");
 		}
 		else {
-			boolean resultado = true;
-			Iterator<String> siguiente = this.significado.iterator();
-			while (siguiente.hasNext() && resultado) {
-				String p1 = siguiente.next();
-				if(!(p1.equalsIgnoreCase(significado))) {
-					this.significado.add(significado);
-					resultado = false;
-				}
+			this.significado.add(significado);
+			if (!(this.significado.add(significado))) {
+				throw new PalabraException ("El significado ya está en la lista");
 			}
 		}
 	}
@@ -84,7 +79,7 @@ public class Palabra {
 		if (getClass() != obj.getClass())
 			return false;
 		Palabra other = (Palabra) obj;
-		return Objects.equals(palabra, other.palabra) && Objects.equals(significado, other.significado);
+		return Objects.equals(palabra, other.palabra);
 	}
 	
 	

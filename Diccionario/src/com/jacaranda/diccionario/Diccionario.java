@@ -1,34 +1,36 @@
 package com.jacaranda.diccionario;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Diccionario {
 
-	private LinkedList<PalabrasEmpiezan> letras;
+	private List<PalabrasEmpiezan> letras;
 
 	public Diccionario() {
 		super();
-		letras = new LinkedList<PalabrasEmpiezan>();
+		letras = new ArrayList<PalabrasEmpiezan>();
 		inicializa();
 
 	}
 
 	private void inicializa() {
 		for (int i = 65; i <= 90; i++) {
-			PalabrasEmpiezan aux = new PalabrasEmpiezan((char) i);
-			letras.add(aux);
+			String letraEmpieza = Character.toString(i);
+			PalabrasEmpiezan p1 = new PalabrasEmpiezan(letraEmpieza.charAt(0));
+			letras.add(p1);
 		}
 	}
 
 	public boolean annadirPalabra(String palabra, String significado) throws Exception {
 		boolean resul = false;
-		Character aux=(palabra.charAt(0));
+		Character aux=palabra.toUpperCase().charAt(0);
 		PalabrasEmpiezan primeraLetra = new PalabrasEmpiezan(aux);
-		int pos = letras.indexOf(primeraLetra);
+		int pos = this.letras.indexOf(primeraLetra);
 		if (pos < 0) {
 			throw new Exception("Caracter no válido");
 		} else {
-			letras.get(pos).addPalabra(palabra, significado);
+			this.letras.get(pos).addPalabra(palabra, significado);
 			resul = true;
 		}
 		return resul;
@@ -36,14 +38,13 @@ public class Diccionario {
 
 	public boolean borrarPalabra(String palabra) throws Exception {
 		boolean resul = false;
-		Character aux=(palabra.charAt(0));
-		PalabrasEmpiezan primeraLetra = new PalabrasEmpiezan(aux);
-		int pos = letras.indexOf(primeraLetra);
+		PalabrasEmpiezan primeraLetra = new PalabrasEmpiezan(palabra.toUpperCase().charAt(0));
+		int pos = this.letras.indexOf(primeraLetra);
 		if(pos<0) {
 			throw new Exception("Carácter no válido");
 		}
 		else {
-			letras.get(pos).delPalabra(palabra);
+			this.letras.get(pos).delPalabra(palabra);
 			resul=true;
 		}
 		return resul;
