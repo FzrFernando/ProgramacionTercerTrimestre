@@ -17,6 +17,9 @@ public class Provincia {
 
 	public Provincia(String nombre, String codigo) throws ProvinciaException {
 		super();
+		if (nombre == null) {
+			throw new ProvinciaException("El nombre del pueblo no puede ser nulo");
+		}
 		this.nombre = nombre.toUpperCase();
 		setCodigo(codigo);
 		this.pueblos = new ArrayList<Pueblo>();
@@ -25,65 +28,65 @@ public class Provincia {
 		this.superficie = 0;
 	}
 
-	private void setCodigo(String codigo) throws ProvinciaException {
-		if (codigo == null) {
-			throw new ProvinciaException("No puede ser nulo");
+	public void setCodigo(String codigo) throws ProvinciaException {
+		if (codigo==null) {
+			throw new ProvinciaException("El nombre no puede ser nulo");
 		}
-		if (codigo.length() ==2 && codigo.chars().allMatch(Character :: isDigit)) {
+		if (codigo.length() == 2 && codigo.chars().allMatch(Character::isDigit)) {
 			this.codigo = codigo;
+		} else {
+			throw new ProvinciaException("El c�digo no es correcto");
 		}
-		else {
-			throw new ProvinciaException("El código tiene que tener una longitud 2 y ser numérico");
-		}
+
 	}
 
-	private boolean existePueblo(String pueblo) throws ProvinciaException {
+	private boolean existePueblo(String nombre) throws ProvinciaException {
 		boolean resultado = false;
-		if (pueblo == null) {
-			throw new ProvinciaException("El pueblo no puede ser nulo");
+		if (nombre==null) {
+			throw new ProvinciaException("El nombre del pueblo no puede ser nulo");
 		}
 		for (Pueblo p : this.pueblos) {
-			if (p.getNombre().equalsIgnoreCase(pueblo)) {
+			if (p.getNombre().equalsIgnoreCase(nombre)) {
 				resultado = true;
 			}
 		}
 		return resultado;
 	}
 
-	public boolean addPueblo(String nombre, String codigo, int numeroHabitantes, double rentaPerCapita,
-			double superficie) throws ProvinciaException, PuebloException {
-		boolean add = false;
-		String codigonuevo = this.codigo + codigo;
+	public boolean addPueblo(String nombre, String codigo, int numeroHabitantes, double rentaPerCapita, double superficie) throws ProvinciaException, PuebloException {
+		boolean resultado = false;
+		String codigoNuevo = this.codigo + codigo;
 		if (nombre == null) {
-			throw new ProvinciaException("El nombre de la provincia no puede ser nulo");
+			throw new ProvinciaException("El codigo no puede ser nulo");
 		}
 		if (existePueblo(nombre)) {
 			throw new ProvinciaException("El pueblo ya existe");
 		} else {
-			Pueblo p2 = new Pueblo(nombre, codigonuevo, numeroHabitantes, rentaPerCapita, superficie);
-			pueblos.add(p2);
-			add = true;
+			Pueblo p1 = new Pueblo(nombre, codigoNuevo, numeroHabitantes, rentaPerCapita, superficie);
+			pueblos.add(p1);
+			resultado = true;
 			this.superficie += superficie;
 			this.numeroHabitantes += numeroHabitantes;
 			this.rentaPerCapita += rentaPerCapita;
 		}
-		return add;
+		return resultado;
 	}
 
-	public String listadoNombresPueblos() {
-		String cadenafinal = "";
+
+	public String listadoNombrePueblo() {
+		StringBuilder cadenaNueva = new StringBuilder("");
 		for (Pueblo p : this.pueblos) {
-			cadenafinal = p.getNombre() + "\n";
+			cadenaNueva.append(p.getNombre() + "\n");
 		}
-		return cadenafinal;
+		return cadenaNueva.toString();
 	}
 
 	public String listadoPueblos() {
-		String cadenafinal = "";
+		StringBuilder cadenaNueva = new StringBuilder("");
 		for (Pueblo p : this.pueblos) {
-			cadenafinal = p.toString() + "\n";
+			cadenaNueva.append(p);
 		}
-		return cadenafinal;
+		return cadenaNueva.toString();
 	}
 
 	public boolean delPueblo(String nombre) {
@@ -92,56 +95,55 @@ public class Provincia {
 		while (siguiente.hasNext()) {
 			Pueblo p = siguiente.next();
 			if (p.getNombre().equalsIgnoreCase(nombre)) {
-				this.pueblos.remove(siguiente.next());
-				eliminado = true;
-				this.numeroHabitantes -= p.getNumeroHabitantes();
-				this.rentaPerCapita -= p.getRentaPerCapita();
+				this.pueblos.remove(p);
 				this.superficie -= p.getSuperficie();
+				this.rentaPerCapita -= p.getRentaPerCapita();
+				this.numeroHabitantes -= p.getNumeroHabitantes();
 			}
 		}
 		return eliminado;
 	}
 
 	public boolean setSuperficie(String pueblo, double superficie) throws ProvinciaException, PuebloException {
-		boolean resultado = false;
 		double diferencia = 0;
-		if (superficie < 0) {
-			throw new ProvinciaException("La superficie debe ser válida");
+		if (superficie<0) {
+			throw new ProvinciaException("La superficie debe de ser positiva");
 		}
+		boolean resultado=false;
 		if (existePueblo(pueblo)) {
-			Iterator<Pueblo> siguiente = this.pueblos.iterator();
-			while (siguiente.hasNext()) {
-				Pueblo p = siguiente.next();
-				if (p.getNombre().equalsIgnoreCase(pueblo)) {
-					diferencia = superficie - p.getSuperficie();
-					p.setSuperficie(superficie);
+			Iterator <Pueblo> p = this.pueblos.iterator();
+			while (p.hasNext()) {
+				Pueblo p2=p.next();
+				if (p2.getNombre().equalsIgnoreCase(pueblo)) {
+					diferencia=superficie-p2.getSuperficie();
+					p2.setSuperficie(superficie);
 				}
 			}
-			this.superficie += diferencia;
-			resultado = true;
+			this.superficie+=diferencia;
+			resultado=true;
 		} else {
 			throw new ProvinciaException("No existe el pueblo");
 		}
 		return resultado;
 	}
 
-	public boolean setNumeroHabitantes(String pueblo, int numeroHabitantes) throws ProvinciaException, PuebloException {
-		boolean resultado = false;
-		double diferencia = 0;
-		if(numeroHabitantes < 0) {
-			throw new ProvinciaException("Los numeros de habitantes deben ser válidos");
+	public boolean setNumeroHabitantes(String nombre, int numeroHabitantes) throws ProvinciaException, PuebloException {
+		boolean resultado=false;
+		if (numeroHabitantes<0) {
+			throw new ProvinciaException("Los n�meros de habitantes debe de ser positiva");
 		}
-		if (existePueblo(pueblo)) {
-			Iterator<Pueblo> siguiente = this.pueblos.iterator();
-			while (siguiente.hasNext()) {
-				Pueblo p = siguiente.next();
-				if (p.getNombre().equalsIgnoreCase(pueblo)) {
-					diferencia = numeroHabitantes - p.getNumeroHabitantes();
-					p.setNumeroHabitantes(numeroHabitantes);
+		int diferencia=0;
+		if (existePueblo(nombre)) {
+			Iterator <Pueblo> p = this.pueblos.iterator();
+			while (p.hasNext()) {
+				Pueblo p2=p.next();
+				if (p2.getNombre().equalsIgnoreCase(nombre)) {
+					diferencia=numeroHabitantes-p2.getNumeroHabitantes();
+					p2.setNumeroHabitantes(numeroHabitantes);
 				}
 			}
-			this.numeroHabitantes += diferencia;
-			resultado = true;
+			this.superficie+=diferencia;
+			resultado=true;
 		} else {
 			throw new ProvinciaException("No existe el pueblo");
 		}
@@ -183,18 +185,17 @@ public class Provincia {
 				+ ", rentaPerCapita=" + rentaPerCapita + ", superficie=" + superficie + ", pueblos=" + pueblos + "]";
 	}
 	
-	public String getInformacionPueblo(String pueblo) throws ProvinciaException {
-		String cadenafinal = null;
-		if (!existePueblo(pueblo) || pueblo.equals(null)) {
-			cadenafinal = null;
-		}
-		else {
-			for (Pueblo p : this.pueblos) {
-				if (p.getNombre().equalsIgnoreCase(pueblo)) {
-					cadenafinal = p.toString() + "\n";
+	public String getInformacionPueblo(String nombre) throws ProvinciaException {
+		String resultado="";
+		if (!existePueblo(nombre) || nombre==null) {
+			resultado=null;
+		}else {
+			for (Pueblo p:this.pueblos) {
+				if (p.getNombre().equalsIgnoreCase(nombre)) {
+					resultado=p.toString();
 				}
 			}
 		}
-		return cadenafinal;
+		return resultado;
 	}
 }
