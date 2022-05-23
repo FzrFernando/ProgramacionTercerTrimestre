@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Properties;
+
+import com.google.gson.Gson;
 
 public class Principal {
 
@@ -11,6 +14,15 @@ public class Principal {
 		String fichero = imprimirFicheroPorLineas("ficheros/prueba1.json");
 		System.out.println("************************");
 		System.out.println(fichero);
+		
+		Gson gson = new Gson();
+		
+		Properties properties = gson.fromJson(fichero, Properties.class);
+		
+		System.out.println(properties.get("nombre"));
+		System.out.println(properties.get("apellidos"));
+		System.out.println(properties.get("edad"));
+		
 	}
 
 	private static String imprimirFicheroPorLineas(String nombreFichero) {
