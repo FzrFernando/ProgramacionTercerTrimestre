@@ -8,7 +8,7 @@ public class OrdenarDeMenorAMayor implements Comparator<Temporada> {
 	
 	@Override
 	public int compare(Temporada o1, Temporada o2) {
-		int numerosCapitulos = o2.contarNumerosCapitulos() - o1.contarNumerosCapitulos();
+		int numerosCapitulos = o1.contarNumerosCapitulos() - o2.contarNumerosCapitulos();
 		return numerosCapitulos;
 	}
 

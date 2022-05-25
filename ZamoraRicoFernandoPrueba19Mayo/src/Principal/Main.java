@@ -15,9 +15,9 @@ import PlataformaOnline.jacaranda.com.Tema;
 import PlataformaOnline.jacaranda.com.Temporada;
 
 public class Main {
-	
+
 	public static HashMap<String, Serie> mapSeries = new HashMap<String, Serie>();
-	
+
 	static Scanner teclado = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -35,19 +35,24 @@ public class Main {
 			series.annadirCapituloTemporada("This is us", "Empezamos", "Los niños");
 			series.annadirCapituloTemporada("This is us", "Empezamos", "CAsi el final");
 			series.annadirCapituloTemporada("This is us", "Empezamos", "El final");
-			escribirEnFicheroSeries("ficheros//Series.csv", null);
-			
+			System.out.println(series);
+			series.listadoOrdenadoSeriesDeUnTema(Tema.DRAMA);
+			System.out.println(series);
+			escribirEnFicheroSeries("ficheros\\FicherosSeries.csv", series);
+			series.escribeTemporada("ficheros\\ficheroTemporada.csv");
+			series.escribeCapitulo("ficheros\\ficheroCapitulos.csv");
 
 		} catch (SerieException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void escribirEnFicheroSeries(String nombre, Serie s) {
+	private static void escribirEnFicheroSeries(String nombre, Series s) {
 		try {
 			FileWriter flujoEscritura = new FileWriter(nombre);
 			PrintWriter filtroEscritura = new PrintWriter(flujoEscritura);
-			filtroEscritura.println(s.escribeFichero());
+
+			filtroEscritura.println(s.escribeSerie());
 			filtroEscritura.close();
 			flujoEscritura.close();
 		} catch (IOException e) {

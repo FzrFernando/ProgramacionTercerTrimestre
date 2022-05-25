@@ -8,8 +8,7 @@ public class OrdenarDeMayorAMenor implements Comparator<Temporada> {
 	
 	@Override
 	public int compare(Temporada o1, Temporada o2) {
-		int notaMedia = (int) ((int) o1.getNotaMedia()-o2.getNotaMedia());
-		return notaMedia;
+		return - (int) ((int)o1.getNotaMedia()-o2.getNotaMedia());
 	}
 
 }

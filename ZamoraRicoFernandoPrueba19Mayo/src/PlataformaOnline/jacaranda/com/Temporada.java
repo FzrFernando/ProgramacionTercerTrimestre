@@ -72,21 +72,8 @@ public class Temporada {
 	 * @throws SerieException: si no encuentra el capítulo que indica la posición para añadir.
 	 */
 	public void anadirCapituloDespues(String nombreCapituloAnnadir, String nombreCapituloAnterior) throws SerieException{
-		int posicion = 0;
-		boolean encontrado = false;
-		Iterator <String> siguiente = this.capitulos.iterator();
-		while (siguiente.hasNext() && !encontrado) {
-			String p1 = siguiente.next();
-			if (p1.equalsIgnoreCase(nombreCapituloAnterior)) {
-				posicion = this.capitulos.indexOf(p1);
-				encontrado = true;
-			}
-		}
-		posicion+=1;
-		this.capitulos.add(posicion, nombreCapituloAnnadir);
-		if (!encontrado) {
-			throw new SerieException("No se pudo añadir la serie, ya que no encontramos el capítulo anterior+");
-		}
+		int pos = this.capitulos.indexOf(nombreCapituloAnterior);
+		this.capitulos.add(pos + 1, nombreCapituloAnnadir);
 	}
 	
 
@@ -98,20 +85,20 @@ public class Temporada {
 	 * @throws SerieException
 	 */
 	public String primerCapituloQueContieneEstaPalabara(String palabra) throws SerieException {
-		String primerCapitulo = new String();
+		String capitulo = null;
+		Iterator<String> siguiente = this.capitulos.iterator();
 		boolean encontrado = false;
-		Iterator <String>siguiente = this.capitulos.iterator();
 		while (siguiente.hasNext() && !encontrado) {
-			String p1 = siguiente.next();
-			if (p1.contains(palabra)) {
-				primerCapitulo = p1;
+			String aux = siguiente.next();
+			if (aux.contains(palabra)) {
+				capitulo = aux;
 				encontrado = true;
 			}
 		}
 		if (!encontrado) {
-			throw new SerieException("No se ha encontrado el capítulo que busca");
+			throw new SerieException("No se encuentra el capitulo");
 		}
-		return primerCapitulo;
+		return capitulo;
 	}
 	
 	
@@ -165,6 +152,17 @@ public class Temporada {
 	public int contarNumerosCapitulos() {
 		int numerosCapitulos = capitulos.size();
 		return numerosCapitulos;
+	}
+	
+	public String escribeFichero() {
+		return this.nombreTemporada+","+this.contarNumerosCapitulos()+","+this.sumaOpiniones+","+this.numeroOpiniones;
+	}
+	public String escribeCapitulos() {
+		StringBuilder resultado=new StringBuilder();
+		for (String c:this.capitulos) {
+			resultado.append(c+",");
+		}
+		return resultado.toString();
 	}
 	
 }
