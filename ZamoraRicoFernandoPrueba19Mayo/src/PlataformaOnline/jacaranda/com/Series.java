@@ -110,6 +110,9 @@ public class Series {
 	 */
 	public void modificarTema(String nombreSerie, Tema nuevoTema) throws SerieException {
 		Serie s = this.mapSeries.get(nombreSerie);
+		if (s == null || s.getTema() == nuevoTema) {
+			throw new SerieException("La serie no se encuentra o el tema es el mismo");
+		}
 		s.setTema(nuevoTema);
 	}
 
@@ -129,7 +132,7 @@ public class Series {
 			if (c.getTema().equals(tema)) {
 				valores.add(c);
 			} else {
-				throw new SerieException("No está el tema");
+				throw new SerieException("No estï¿½ el tema");
 			}
 		}
 		OrdenarAnnos a = new OrdenarAnnos();

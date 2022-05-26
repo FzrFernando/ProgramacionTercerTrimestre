@@ -73,6 +73,9 @@ public class Temporada {
 	 */
 	public void anadirCapituloDespues(String nombreCapituloAnnadir, String nombreCapituloAnterior) throws SerieException{
 		int pos = this.capitulos.indexOf(nombreCapituloAnterior);
+		if (pos == 0) {
+			throw new SerieException("El capítulo que buscas no se encuentra");
+		}
 		this.capitulos.add(pos + 1, nombreCapituloAnnadir);
 	}
 	
