@@ -17,7 +17,18 @@ public class Comunidad {
 		this.nombre = nombre;
 		this.listMunicipio = listMunicipio;
 	}
-	
 
+
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public String mostrarMunicipios(int anno) {
+		StringBuilder resul=new StringBuilder();
+		for(Municipio m:listMunicipio) {
+			resul.append(m.getDescrip()+m.mostrarDatos(anno));
+		}
+		return resul.toString();
+	}
 	
 }

@@ -12,7 +12,19 @@ public class Municipio {
 		this.descrip = descrip;
 		this.datos = datos;
 	}
+
+	public String getDescrip() {
+		return descrip;
+	}
 	
-	
+	public String mostrarDatos(int anno) {
+		StringBuilder datosFinales = new StringBuilder();
+		for (Datos d: datos) {
+			if (d.getAno()==anno) {
+				datosFinales.append(d + "\n");
+			}
+		}
+		return datosFinales.toString();
+	}
 	
 }

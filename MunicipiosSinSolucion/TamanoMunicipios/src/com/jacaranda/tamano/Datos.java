@@ -17,6 +17,16 @@ public class Datos {
 	public String toString() {
 		return "Datos [ano=" + ano + ", dato=" + dato + "]";
 	}
+
+
+	public int getAno() {
+		return ano;
+	}
+
+
+	public int getDato() {
+		return dato;
+	}
 	
 	
 }

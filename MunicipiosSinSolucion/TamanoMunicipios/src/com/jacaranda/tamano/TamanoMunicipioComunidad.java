@@ -1,5 +1,6 @@
 package com.jacaranda.tamano;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 import com.google.gson.Gson;
@@ -13,11 +14,22 @@ public class TamanoMunicipioComunidad {
 		lista = new ArrayList<Comunidad>();
 	}
 	
-	public String mostrarLista() {
+	public void cargarDatos() {
 		Gson gson = new Gson();
 		lista = gson.fromJson("tamanoMunicipioComunidad.json", new TypeToken<ArrayList<Comunidad>>(){}.getType());
-		String json = gson.toJson(lista);
-		return json;
 	}
 	
+	public String mostrarComunidadesPorAnno(String comunidad, int anno) {
+		StringBuilder comunidades = new StringBuilder();
+		Iterator<Comunidad> siguiente = this.lista.iterator();
+		boolean encontrado = false;
+		while(siguiente.hasNext() && !encontrado) {
+			Comunidad c = siguiente.next();
+			if(c.getNombre().toUpperCase().equalsIgnoreCase(comunidad.toUpperCase())) {
+				comunidades.append(c.getNombre()+c.mostrarMunicipios(anno));
+				encontrado=true;
+			}
+		}
+		return comunidades.toString();
+	}
 }
