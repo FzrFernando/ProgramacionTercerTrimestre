@@ -1,5 +1,6 @@
 package com.jacaranda.tamano;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -7,20 +8,16 @@ import com.google.gson.reflect.TypeToken;
 public class TamanoMunicipioComunidad {
 
 	private ArrayList<Comunidad> lista;
-
+	
 	public TamanoMunicipioComunidad() {
 		lista = new ArrayList<Comunidad>();
 	}
 	
-	public void cargarDatos(String datos) {
+	public String mostrarLista() {
 		Gson gson = new Gson();
-		ArrayList<Comunidad> lista = gson.fromJson(datos, new TypeToken<ArrayList<Comunidad>>() {}.getType());
+		lista = gson.fromJson("tamanoMunicipioComunidad.json", new TypeToken<ArrayList<Comunidad>>(){}.getType());
+		String json = gson.toJson(lista);
+		return json;
 	}
-
-	@Override
-	public String toString() {
-		return "TamanoMunicipioComunidad [lista=" + lista + "]";
-	}
-	
 	
 }

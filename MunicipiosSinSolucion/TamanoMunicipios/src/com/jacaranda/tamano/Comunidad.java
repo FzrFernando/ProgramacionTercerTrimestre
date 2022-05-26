@@ -6,11 +6,18 @@ public class Comunidad {
 	private String nombre;
 	private ArrayList<Municipio> listMunicipio;
 	
+	
 	public Comunidad(String descrip) {
-		listMunicipio = new ArrayList<>();
 		this.nombre = descrip;
 	}
+
+
+	public Comunidad(String nombre, ArrayList<Municipio> listMunicipio) {
+		super();
+		this.nombre = nombre;
+		this.listMunicipio = listMunicipio;
+	}
 	
-	
+
 	
 }
