@@ -1,17 +1,21 @@
 package com.jacaranda.diccionario;
 
+import java.util.Scanner;
+
 public class Main {
 
+	private static Scanner teclado = new Scanner(System.in);
+	
 	public static void main(String[] args) throws Exception {
-		Diccionario d1 = new Diccionario();
-		System.out.println(d1);
-		try {
-			d1.annadirPalabra("Ratilla","Javier");
-			System.out.println(d1);
-			d1.borrarPalabra("Ratilla");
-			System.out.println(d1);
-		} catch (DiccionarioException | PalabrasEmpiezanException | PalabraException e) {
-			e.printStackTrace();
-		}
+		String palabra = leerCadena("Introduce la palabra: ");
+		String significado = leerCadena("Introduce el significado: ");
+		Diccionario diccionario = new Diccionario();
+		diccionario.addPalabra(palabra, significado);
+		System.out.println(diccionario.toString());
+	}
+	
+	public static String leerCadena(String texto) {
+		System.out.println(texto);
+		return teclado.nextLine();
 	}
 }

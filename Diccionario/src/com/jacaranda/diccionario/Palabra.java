@@ -1,73 +1,37 @@
 package com.jacaranda.diccionario;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
-import java.util.Set;
 
-public class Palabra {
-
-	private String palabra;
-	private Set<String> significado;
+public class Palabra implements Comparable<Palabra>{
 	
-	public Palabra(String palabra) {
+	private String nombre;
+	private HashSet<Significado> significados;
+	
+	
+	public Palabra(String nombre) throws LemaException {
 		super();
-		this.palabra = palabra;
-		this.significado = new HashSet<>();
-	}
-	
-	public Palabra(String palabra, String significado) {
-		super();
-		this.palabra = palabra;
-		this.significado = new HashSet<>();
-		this.significado.add(significado);
-	}
-	
-	public String getPalabra() {
-		return palabra;
-	}
-	
-	public Character getInicialPalabra() {
-		return this.getPalabra().charAt(0);
+		this.setNombre(nombre);
+		this.significados = new HashSet<>();		
 	}
 
-	public void addSignificado(String significado) throws PalabraException {
-		if(significado == null) {
-			throw new PalabraException("No puede ser nulo");
-		}
-		else {
-			this.significado.add(significado);
-			if (!(this.significado.add(significado))) {
-				throw new PalabraException ("El significado ya está en la lista");
-			}
-		}
-	}
-	
-	public void delSignificado(String significado) throws PalabraException {
-		if (significado == null) {
-			throw new PalabraException("No puede ser nulo");
-		}
-		else {
-			boolean resultado = false;
-			Iterator<String> siguiente = this.significado.iterator();
-			while (siguiente.hasNext()) {
-				String p1 = siguiente.next();
-				if(p1.equalsIgnoreCase(significado)) {
-					this.significado.remove(significado);
-					resultado = true;
-				}
-			}
-		}
+	public String getNombre() {
+		return nombre;
 	}
 
-	@Override
-	public String toString() {
-		return "Palabra [palabra=" + palabra + ", significado=" + significado + "]";
+	private void setNombre(String nombre) throws LemaException {
+		this.nombre = nombre.toUpperCase();
+	}
+	
+	public void addSignificado(Significado significado) throws LemaException {
+		if(!significados.add(significado)) {
+			throw new LemaException("Significado ya existente.");
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(palabra, significado);
+		return Objects.hash(nombre);
 	}
 
 	@Override
@@ -79,7 +43,21 @@ public class Palabra {
 		if (getClass() != obj.getClass())
 			return false;
 		Palabra other = (Palabra) obj;
-		return Objects.equals(palabra, other.palabra);
+		return Objects.equals(nombre, other.nombre);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder mensaje = new StringBuilder(nombre + "\n");
+		for(Significado s : significados) {
+			mensaje.append(s);
+		}
+		return mensaje.toString();
+	}
+
+	@Override
+	public int compareTo(Palabra o) {
+		return nombre.compareToIgnoreCase(o.nombre);
 	}
 	
 	
