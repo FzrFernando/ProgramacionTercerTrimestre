@@ -1,5 +1,8 @@
 package com.jacaranda.almacen;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -83,5 +86,17 @@ public class Almacen {
 		return "Almacen [codigo=" + codigo + ", mercancia=" + mercancia + ", usuario=" + usuario + "]";
 	}
 	
-	
+	public String annadirUsuarioBaseDatos(Connection c, String nombre, String codigo) {
+		String cadenafinal = "";
+		try {
+			Statement instruccion = c.createStatement();
+			String query = "INSERT INTO Usuario VALUES ('"+nombre+"','"+codigo + "')";
+			instruccion.executeUpdate(query);
+			cadenafinal = query;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cadenafinal;
+	}
 }
