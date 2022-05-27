@@ -90,7 +90,7 @@ public class Almacen {
 		String cadenafinal = "";
 		try {
 			Statement instruccion = c.createStatement();
-			String query = "INSERT INTO Usuario VALUES ('"+nombre+"','"+codigo + "')";
+			String query = "INSERT INTO USUARIO VALUES ('"+nombre+"','"+codigo + "')";
 			instruccion.executeUpdate(query);
 			cadenafinal = query;
 		} catch (SQLException e) {

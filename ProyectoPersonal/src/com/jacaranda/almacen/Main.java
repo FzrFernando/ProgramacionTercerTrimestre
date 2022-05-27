@@ -1,6 +1,7 @@
 package com.jacaranda.almacen;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -14,10 +15,14 @@ public class Main {
 		// System.out.println(al.toString());
 
 		try {
-			Connection conexion = DriverManager.getConnection("localhost:1521/ORCLCDB.localdomain", "programacion", "programacion");
+			Connection conexion = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/ORCLCDB.localdomain", "programacion", "programacion");
 			System.out.println(al.annadirUsuarioBaseDatos(conexion, "Rafael", "13"));
+//			DatabaseMetaData infoBD= conexion.getMetaData();
+//			System.out.println("Base de datos: " + infoBD.getDatabaseProductName());
+//			System.out.println("Version: " + infoBD.getDatabaseProductVersion());
 		} catch (SQLException ex) {
 			// Tratar el error
+			System.out.println(ex.getMessage());
 		}
 	}
 
