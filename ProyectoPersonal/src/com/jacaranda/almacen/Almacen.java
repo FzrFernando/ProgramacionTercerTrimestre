@@ -94,7 +94,48 @@ public class Almacen {
 			instruccion.executeUpdate(query);
 			cadenafinal = query;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cadenafinal;
+	}
+	
+	public String actualizarUsuarioBaseDatos(Connection c, String nombre, String codigo) {
+		String cadenafinal = "";
+		Statement instruccion;
+		try {
+			instruccion = c.createStatement();
+			String query = "UPDATE USUARIO SET nombre ='"+nombre+"' WHERE codigo ='"+codigo + "'";
+			instruccion.executeUpdate(query);
+			cadenafinal = query;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cadenafinal;
+	}
+	
+	public String eliminarUsuarioBaseDatos(Connection c, String codigo) {
+		String cadenafinal = "";
+		Statement instruccion;
+		try {
+			instruccion = c.createStatement();
+			String query = "DELETE FROM USUARIO WHERE codigo ='"+codigo + "'";
+			instruccion.executeUpdate(query);
+			cadenafinal = query;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cadenafinal;
+	}
+	
+	public String consultarUsuarioBaseDatos(Connection c) {
+		String cadenafinal = "";
+		Statement instruccion;
+		try {
+			instruccion = c.createStatement();
+			String query = "SELECT * FROM USUARIO";
+			instruccion.executeUpdate(query);
+			cadenafinal = query;
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return cadenafinal;

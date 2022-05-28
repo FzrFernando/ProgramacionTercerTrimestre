@@ -16,7 +16,12 @@ public class Main {
 
 		try {
 			Connection conexion = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/ORCLCDB.localdomain", "programacion", "programacion");
-			System.out.println(al.annadirUsuarioBaseDatos(conexion, "Rafael", "13"));
+//			System.out.println(al.annadirUsuarioBaseDatos(conexion, "Rafael", "13"));
+//			System.out.println(al.consultarUsuarioBaseDatos(conexion));
+//			System.out.println(al.actualizarUsuarioBaseDatos(conexion, "Josué", "13"));
+//			System.out.println(al.consultarUsuarioBaseDatos(conexion));
+//			System.out.println(al.eliminarUsuarioBaseDatos(conexion, "13"));
+//			System.out.println(al.consultarUsuarioBaseDatos(conexion));
 //			DatabaseMetaData infoBD= conexion.getMetaData();
 //			System.out.println("Base de datos: " + infoBD.getDatabaseProductName());
 //			System.out.println("Version: " + infoBD.getDatabaseProductVersion());

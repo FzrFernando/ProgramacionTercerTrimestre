@@ -1,0 +1,5 @@
+CREATE TABLE USUARIO(
+nombre	VARCHAR2(50),
+codigo	VARCHAR2(50),
+CONSTRAINT pk_usuario PRIMARY KEY (codigo)
+);
